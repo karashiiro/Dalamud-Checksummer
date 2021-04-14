@@ -7,6 +7,8 @@ $pluginZip = $Args[0]
 $metaFile = $Args[1]
 $meta = Get-Content -Path $metaFile | ConvertFrom-JSON
 
+$genericReassurance = "This is not an issue in and of itself, but the PR process may take longer than usual."
+
 # Unzip archive and get the DLL hash from it
 Expand-Archive -Path $pluginZip -DestinationPath unpack/ -Force
 Set-Location unpack
@@ -26,13 +28,13 @@ $hash2 = Get-FileHash "$($meta.InternalName).dll" -Algorithm SHA512
 
 # Compare DLL hashes and provide result
 if ($hash2 -eq "") {
-    Write-Error "The linked repository is set up differently than expected. This is not an issue in and of itself, but the PR process may take longer than usual."
+    Write-Error "The linked repository is set up differently than expected. $($genericReassurance)"
     return
 }
 
 if ($hash1 -ne $hash2) {
-    Write-Error "DLL checksum does not match build from linked repository. This is not an issue in and of itself, but the PR process may take longer than usual."
+    Write-Error "DLL checksum does not match build from linked repository. $($genericReassurance)"
     return
 }
 
-Write-Output "DLL checksum matches build from linked repository. The linked repository code can be read instead of using ILSpy."
+Write-Output "DLL checksum matches build from linked repository. $($genericReassurance)"
