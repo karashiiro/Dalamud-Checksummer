@@ -41,4 +41,4 @@ if ($hash1 -ne $hash2) {
     return
 }
 
-Write-Output "DLL checksum matches build from linked repository. $($genericReassurance)"
+Write-Output "DLL checksum matches build from linked repository. The latest GitHub commit can be used instead of ILSpy."
