@@ -16,6 +16,11 @@ $hash1 = Get-FileHash "$($meta.InternalName).dll" -Algorithm SHA512
 Set-Location ..
 
 # Checkout linked repository
+if (-not(Get-Member -InputObject $meta -Name "RepoUrl" -MemberType Properties)) {
+    Write-Error "No public repository is provided in the plugin JSON. $($genericReassurance)"
+    return
+}
+
 $repoUrl = $meta.RepoUrl
 git clone $repoUrl
 
