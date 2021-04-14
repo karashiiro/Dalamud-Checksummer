@@ -26,7 +26,6 @@ git clone $repoUrl
 
 # Build inside repository and get latest DLL hash
 Set-Location $repoUrl.Substring($repoUrl.LastIndexOf("/") + 1)
-dotnet restore
 dotnet build -c Release
 Set-Location "$($meta.InternalName)/bin/Release/net472"
 $hash2 = Get-FileHash "$($meta.InternalName).dll" -Algorithm SHA512
